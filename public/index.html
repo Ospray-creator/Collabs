@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collabs</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-mark">C</div>
+        <div>
+          <p class="eyebrow">Workspace</p>
+          <h1>Collabs</h1>
+        </div>
+      </div>
+      <button id="refreshBtn" class="secondary-button">Refresh</button>
+    </header>
+
+    <main class="layout">
+      <section class="panel form-panel">
+        <h2>Create a project</h2>
+        <form id="projectForm">
+          <label for="projectName">Project name</label>
+          <input id="projectName" name="projectName" type="text" placeholder="Team roadmap" required />
+          <button type="submit" class="primary-button">Add project</button>
+        </form>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="panel-header">
+          <h2>Projects</h2>
+          <span id="projectCount" class="count-badge">0</span>
+        </div>
+        <div id="projectList" class="project-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
