@@ -1,22 +1,167 @@
-# Collabs
+# MoneyPrinterTurbo — описание и настройка
 
-A minimal full-stack starter for the Collabs workspace.
+Этот блокнот — [docs/MoneyPrinterTurbo.ipynb](MoneyPrinterTurbo.ipynb). Он запускает проект [MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo) из GitHub прямо в среде Google Colab.
 
-## Included
-- A Node.js HTTP server with REST endpoints
-- A simple front-end dashboard for creating and listing projects
-- Basic styling and client-side interactions
+## Что именно делает этот notebook
 
-## Run locally
+Блокнот выполняет несколько шагов:
 
-```bash
-npm start
-```
+1. Клонирует репозиторий MoneyPrinterTurbo из GitHub.
+2. Устанавливает зависимости в изолированную среду Python 3.11 через `uv`.
+3. Настраивает `ngrok`, чтобы открыть локальный Streamlit WebUI из Colab наружу.
+4. Запускает WebUI через `streamlit run webui/Main.py`.
+5. После запуска даёт публичный URL для доступа к интерфейсу.
 
-Then open http://localhost:3000 in your browser.
+Важно: в Google Colab все файлы в `/content` и процессы временные. Если runtime будет сброшен, то созданные файлы и запущенные сессии могут пропасть.
 
-## API
+## Проект MoneyPrinterTurbo: что это такое
 
-- GET /api/health
-- GET /api/projects
-- POST /api/projects
+MoneyPrinterTurbo — это проект на Python, который помогает автоматически генерировать короткие видео на основе темы или ключевых слов.
+
+По сути, он делает примерно так:
+
+- принимает тему или набор ключевых слов;
+- генерирует сценарий/скрипт для видео;
+- подбирает подходящие материалы и визуальные элементы;
+- создаёт субтитры;
+- собирает короткий ролик и готовит итоговый результат.
+
+У проекта есть WebUI (через Streamlit), а также способность работать с различными AI-моделями и API для генерации текста, изображений и видео.
+
+### Основные характеристики проекта
+
+- GitHub: https://github.com/harry0703/MoneyPrinterTurbo
+- Описание: «Generate HD short videos from a topic or keyword with an automated AI workflow»
+- Звёзды на GitHub (по данным API на момент проверки): около 123 677
+- Форки: около 19 135
+- Open issues: около 29
+
+Это очень популярный проект, и вокруг него уже существует много ответвлений, адаптаций и улучшений.
+
+## Что нужно настроить перед запуском
+
+### 1. Ngrok token
+
+Notebook требует авторизационный токен ngrok, потому что Streamlit запускается внутри Colab, а не локально.
+
+Что делать:
+
+- создать аккаунт на ngrok;
+- взять token в панели управления;
+- вставить в prompt при запуске ячейки с `getpass()`.
+
+### 2. API-ключи и модели
+
+После запуска WebUI в интерфейсе нужно зайти в Settings и настроить:
+
+- модель LLM;
+- ключи для доступа к API;
+- при необходимости — ключи для генерации медиа.
+
+В самом notebook есть подсказка про OpenRouter:
+
+- можно использовать OpenRouter;
+- нужен ключ OpenRouter API;
+- по умолчанию предлагается модель `minimax/minimax-m3:free`;
+- можно выбрать другую free-модель через OpenRouter.
+
+Ссылка на список free-моделей: https://openrouter.ai/models?variant=free
+
+### 3. Python и зависимости
+
+Notebook сам:
+
+- устанавливает `uv` и `pyngrok`;
+- устанавливает Python 3.11 через `uv`;
+- делает `uv sync --frozen --python 3.11`.
+
+То есть это изолированная и безопасная установка, не трогающая базовую среду Colab.
+
+## Какие источники данных и сервисы поддерживаются
+
+По README самого проекта видно, что MoneyPrinterTurbo позиционируется как инструмент, который может работать с разными AI-сервисами и платформами.
+
+### Источники AI-моделей
+
+Наиболее явно упоминаются:
+
+- OpenRouter;
+- Kimi;
+- Volcengine;
+- OfoxAI;
+- Infistar.ai;
+- Shengsuanyun;
+- AstraFlow от UCloud;
+- и другие платформы, которые в README указаны как спонсоры или интеграции.
+
+### Типичные направления использования
+
+- генерация текста для сценария;
+- подбор ключевых слов и промптов;
+- генерация изображений/обложек;
+- генерация видеоматериалов;
+- создание субтитров и монтажного потока.
+
+## Возможные и интересные форки / ответвления
+
+У проекта очень много форков, и это нормальная часть экосистемы вокруг такого популярного AI-инструмента. Вот несколько примеров, которые можно посмотреть как варианты адаптации или форк-веток:
+
+- https://github.com/WagnerSillva82/MoneyPrinterTurbo
+- https://github.com/xiaoyaoge3315/moneyprinterturbo
+- https://github.com/Vooooood/MoneyPrinterTurbo
+- https://github.com/najibachkara-beep/MoneyPrinterTurbo
+- https://github.com/chejianping1125-cyber/MoneyPrinterTurbo
+- https://github.com/mangjit/MoneyPrinterTurbo
+- https://github.com/Bi656/MoneyPrinterTurbo
+- https://github.com/CGANH/MoneyPrinterTurbo
+
+Что стоит понимать:
+
+- форки часто появляются, когда кто-то хочет локально адаптировать проект под свои нужды;
+- часть форков добавляет поддержку других моделей, сервисов, интерфейсов или улучшает стабильность;
+- даже если проект основной уже достаточно развитый, форки могут содержать полезные изменения, которые стоит сравнить.
+
+## Какой смысл этого notebook в одном абзаце
+
+Этот notebook не создаёт новый проект с нуля — он просто берёт уже существующий MoneyPrinterTurbo, поднимает его в Colab, подготавливает изолированное окружение и делает его доступным через публичный URL. То есть это удобный способ попробовать проект без локальной установки.
+
+## Рекомендуемые шаги после открытия
+
+1. Открыть [docs/MoneyPrinterTurbo.ipynb](MoneyPrinterTurbo.ipynb).
+2. Запустить ячейки по порядку.
+3. Скопировать ngrok token при запросе.
+4. Подождать, пока Streamlit запустится.
+5. Открыть ссылку из вывода.
+6. В WebUI настроить нужные модели и API-ключи.
+7. Начать генерацию коротких видео.
+
+## Ограничения и важные замечания
+
+- Сессия Colab временная.
+- Временные данные и логи находятся в `/content`.
+- Если проект запускается впервые — он может долго устанавливать зависимости.
+- Для стабильной работы нужен рабочий токен ngrok и корректные API-ключи.
+- Оптимальный результат часто зависит от выбранной модели и качества источников данных.
+
+## Полезные ссылки
+
+- Оригинальный репозиторий: https://github.com/harry0703/MoneyPrinterTurbo
+- OpenRouter free models: https://openrouter.ai/models?variant=free
+- Ngrok dashboard: https://dashboard.ngrok.com/get-started/your-authtoken
+- README проекта: https://raw.githubusercontent.com/harry0703/MoneyPrinterTurbo/master/README.md
+
+## Краткая итоговая версия
+
+Если совсем коротко, то этот блокнот:
+
+- запускает MoneyPrinterTurbo из GitHub;
+- подготавливает Python 3.11 и зависимости;
+- создает публичный доступ через ngrok;
+- открывает WebUI для настройки моделей и генерации коротких видео.
+
+Если хочешь, я могу следующим сообщением сделать ещё более структурированную версию этого README под формат:
+
+- быстрое начало;
+- настройки для русскоязычного пользователя;
+- список популярных моделей и провайдеров;
+- краткий FAQ.
